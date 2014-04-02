@@ -394,7 +394,7 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    private class DialogPicker extends DialogFragment {
+    public static class DialogPicker extends DialogFragment {
 
         final static String DIALOG_TITLE = "dialog_title";
         final static String DIALOG_ITEMS_ID = "items_id";
@@ -408,11 +408,11 @@ public class MainActivity extends ActionBarActivity {
             builder.setTitle(args.getInt(DIALOG_TITLE));
             builder.setSingleChoiceItems(
                 args.getInt(DIALOG_ITEMS_ID),
-                getPreferences(MODE_PRIVATE).getInt(args.getString(DIALOG_PREF_KEY), 0),
+                getActivity().getPreferences(MODE_PRIVATE).getInt(args.getString(DIALOG_PREF_KEY), 0),
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+                            SharedPreferences prefs = getActivity().getPreferences(MODE_PRIVATE);
                             prefs.edit().putInt(args.getString(DIALOG_PREF_KEY), which).commit();
                             dialog.dismiss();
                         }

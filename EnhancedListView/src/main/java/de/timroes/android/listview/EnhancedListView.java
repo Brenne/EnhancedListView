@@ -15,6 +15,10 @@
  */
 package de.timroes.android.listview;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
@@ -34,12 +38,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
-import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -612,7 +610,7 @@ public class EnhancedListView extends ListView {
             mAnimatedViews.add(view);
         }
 
-        ViewPropertyAnimator.animate(view)
+        view.animate()
                 .translationX(toRightSide ? mViewWidth : -mViewWidth)
                 .alpha(0)
                 .setDuration(mAnimationTime)
@@ -723,7 +721,7 @@ public class EnhancedListView extends ListView {
                     slideOutView(mSwipeDownView, mSwipeDownChild, mDownPosition, dismissRight);
                 } else if(mSwiping) {
                     // Swipe back to regular position
-                    ViewPropertyAnimator.animate(mSwipeDownView)
+                    mSwipeDownView.animate()
                             .translationX(0)
                             .alpha(1)
                             .setDuration(mAnimationTime)
@@ -773,8 +771,8 @@ public class EnhancedListView extends ListView {
                 }
 
                 if (mSwiping) {
-                    ViewHelper.setTranslationX(mSwipeDownView, deltaX);
-                    ViewHelper.setAlpha(mSwipeDownView, Math.max(0f, Math.min(1f,
+                    mSwipeDownView.setTranslationX(deltaX);
+                    mSwipeDownView.setAlpha(Math.max(0f, Math.min(1f,
                             1f - 2f * Math.abs(deltaX) / mViewWidth)));
                     return true;
                 }
@@ -851,8 +849,8 @@ public class EnhancedListView extends ListView {
 
                     ViewGroup.LayoutParams lp;
                     for (PendingDismissData pendingDismiss : mPendingDismisses) {
-                        ViewHelper.setAlpha(pendingDismiss.view, 1f);
-                        ViewHelper.setTranslationX(pendingDismiss.view, 0);
+                        pendingDismiss.view.setAlpha(1f);
+                        pendingDismiss.view.setTranslationX(0);
                         lp = pendingDismiss.childView.getLayoutParams();
                         lp.height = originalLayoutHeight;
                         pendingDismiss.childView.setLayoutParams(lp);
@@ -930,6 +928,7 @@ public class EnhancedListView extends ListView {
      * @param deltaX The delta of x coordinate of the swipe.
      * @return Whether the delta of a swipe is in the right direction.
      */
+    @TargetApi(17)
     private boolean isSwipeDirectionValid(float deltaX) {
 
         int rtlSign = 1;

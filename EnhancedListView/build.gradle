@@ -6,7 +6,6 @@ repositories {
 
 dependencies {
     compile 'com.android.support:support-v4:19.0.+'
-    compile 'com.nineoldandroids:library:2.4.0'
 }
 
 android {
@@ -14,9 +13,9 @@ android {
     buildToolsVersion "19.0.3"
 
     defaultConfig {
-        minSdkVersion 8
+        minSdkVersion 12
         targetSdkVersion 19
-        versionName "0.3.2"
+        versionName "0.3.2-nodeps"
         versionCode 7
     }
 }
