@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<resources>
-	<string name="elv_undo">Annuler</string>
-	<string name="elv_undo_all">Annuler tout</string>
-	<string name="elv_item_deleted">Élément supprimé</string>
-	<string name="elv_n_items_deleted">%1$s éléments supprimés</string>
-</resources>
